@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Three.js Hypercube (Tesseract) Projection</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+      canvas {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+      // Set up the scene, camera, and renderer
+      var scene = new THREE.Scene();
+      var camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      var renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      // Position the camera inside the tesseract
+      camera.position.set(-10, -10, -1000);
+
+      // Create semi-transparent glass-like material
+      var glassMaterial = new THREE.MeshPhongMaterial({
+        color: 0x00ff00,
+        opacity: 0.5,
+        transparent: true,
+        side: THREE.DoubleSide,
+      });
+
+      // Create the tesseract (hypercube)
+      var geometry = new THREE.BoxGeometry(2, 2, 2, 2, 2, 2);
+      var materials = [
+        glassMaterial,
+        glassMaterial,
+        glassMaterial,
+        glassMaterial,
+        glassMaterial,
+        glassMaterial,
+        glassMaterial,
+        glassMaterial,
+      ];
+      var tesseract = new THREE.Mesh(geometry, materials);
+      scene.add(tesseract);
+
+      // Define the animation loop
+      function animate() {
+        requestAnimationFrame(animate);
+
+        // Rotate the tesseract
+        tesseract.rotation.x += 0.0;
+        tesseract.rotation.y += 0.0;
+        tesseract.rotation.z += 0.0;
+
+        // Render the scene
+        renderer.render(scene, camera);
+      }
+
+      // Start the animation loop
+      animate();
+    </script>
+  </body>
+</html>
